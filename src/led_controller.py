@@ -1,12 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
+from animations import Animations
 from std_msgs.msg import Int8
 from geometry_msgs.msg import Twist
 
 # Red (state 0): autonomous navigation in progress
 # Blue: teleoperation
 # Flashing green (state 1): goal reached
+
+COLORS = (0xFF0000, 0x00FF00, 0x0000FF)
 
 class LEDController:
     def __init__(self):
@@ -16,6 +19,9 @@ class LEDController:
         self.rate = rospy.get_param("~rate", 5)
         self.latest_goal_manager_state = (None, rospy.Time(0))  # (Int, Time())
         self.latest_gamepad_cmd_vel = rospy.Time(0)  # Time()
+        self.led_state = 0  #0: off, 1: solid red, 2: solid blue, 3: flashing green
+        self.prev_led_state = 0
+        self.animations = Animations()
 
         rospy.loginfo("led_controller ready")
         
@@ -36,15 +42,34 @@ class LEDController:
             if  time_since_latest_cmd_vel < self.time_thresh:
                 # Teleoperation
                 print("Blue light")
+                self.led_state = 2
             elif time_since_latest_state < self.time_thresh:
                 if self.latest_goal_manager_state[0] == 0:
                     # Autonomous navigation in progress
                     print("Red light")
+                    self.led_state = 1
                 elif self.latest_goal_manager_state[0] == 1:
                     # Goal reached
                     print("Flashing green light")
+                    self.led_state = 3
             else:
                 print("No light")
+                self.led_state = 0
+            
+            if self.prev_led_state != self.led_state:
+                # LED state has changed.
+                if self.prev_led_state == 3:
+                    self.animations.stop_flashing = True
+                self.prev_led_state = self.led_state
+                if self.led_state == 0:
+                    self.animations.solid(0)
+                elif self.led_state == 1:
+                    self.animations.solid(COLORS[0])
+                elif self.led_state == 2:
+                    self.animations.solid(COLORS[2])
+                elif self.led_state == 3:
+                    self.animations.flashing(COLORS[1], 2)
+
             r.sleep()
 
 
