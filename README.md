@@ -8,7 +8,12 @@
     sudo apt install python3.8
     sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8
     ```
-2. Install the *CircuitPython NeoPixel SPI* library
+2. To make python3 compatible with ROS Melodic:
+    ```
+    sudo apt-get install python3-catkin-pkg-modules
+    sudo apt-get install python3-rospkg-modules
+    ```
+3. Install the *CircuitPython NeoPixel SPI* library
     ```
     pip3 install adafruit-circuitpython-neopixel-spi
     ```
