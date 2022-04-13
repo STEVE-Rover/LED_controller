@@ -6,7 +6,7 @@
 1. Python 3.7 or higher is needed. If it is not already installed you can do so with:
     ```
     sudo apt install python3.8
-    sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8
+    sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
     ```
 2. To make python3 compatible with ROS Melodic:
     ```
