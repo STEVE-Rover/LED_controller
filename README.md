@@ -1,6 +1,22 @@
 # LED_controller
+This node controls a WS2812B LED strip depending on the state of the robot in accordance with the URC 2022 rule book for the autonomous navigation mission.
 
-## Setup
+
+| State              | Light          |
+|--------------------|----------------|
+| Navigating to goal | Solid red      |
+| Goal reached       | Flashing green |
+| Teleoperation      | Solid blue     |
+
+
+## Subscribed topics
+* goal_manager/state (std_msgs/Int8): State of the goal_manager (0: Autonomous navigation in progress, 1: Goal reached)
+* gamepad_cmd_vel (geometry_msgs/Twist): Velocity commands coming from the gamepad
+
+## Parameters
+* ~rate (int, default: 5): Main loop frequency
+* ~time_thresh (float, default: 0.5): Threshold of time in seconds to consider the gamepad velocity commands to have timed out.
+# Setup
 
 ### Dependencies
 1. Python 3.7 or higher is needed. If it is not already installed you can do so with:
@@ -31,9 +47,9 @@
     ```
 7. Copy rules
     ```bash
-    99-gpio.rules /etc/udev/rules.d
+    sudo cp 99-gpio.rules /etc/udev/rules.d
     ```
 8. Reboot
 
 ### Wiring
-Wire the NeoPixel's `DIN` pin to the Nano's `SPI_1_MOSI` pin (19)
+Wire the NeoPixel's `DIN` pin to the Nano's `SPI_1_MOSI` pin (19) and the ground wire in a GND pin (20)
