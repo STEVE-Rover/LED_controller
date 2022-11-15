@@ -10,12 +10,8 @@ This node controls a WS2812B LED strip depending on the state of the robot in ac
 
 
 ## Subscribed topics
-* goal_manager/state (std_msgs/Int8): State of the goal_manager (0: Autonomous navigation in progress, 1: Goal reached)
-* gamepad_cmd_vel (geometry_msgs/Twist): Velocity commands coming from the gamepad
+- goal_manager/state (std_msgs/Int8): State of the goal_manager (0: Nothing, 1: Autonomous navigation in progress, 2: Goal reached, 3: teleoperation)
 
-## Parameters
-* ~rate (int, default: 5): Main loop frequency
-* ~time_thresh (float, default: 0.5): Threshold of time in seconds to consider the gamepad velocity commands to have timed out.
 # Setup
 
 ### Dependencies
