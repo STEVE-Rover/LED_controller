@@ -3,7 +3,6 @@
 import rospy
 from animations import Animations
 from std_msgs.msg import Int8
-from geometry_msgs.msg import Twist
 
 # Red (state 0): autonomous navigation in progress
 # Blue: teleoperation
@@ -18,6 +17,7 @@ class LEDController:
         self.led_state = 0  #0: off, 1: solid red, 2: flashing green, 3: solid blue 
         self.prev_led_state = 0
         self.animations = Animations()
+        self.rate = rospy.get_param("~rate", 5)
 
         rospy.loginfo("led_controller ready")
         rospy.Subscriber("/goal_manager/state", Int8, self.goal_manager_state_cb)
@@ -30,7 +30,7 @@ class LEDController:
         while not rospy.is_shutdown():
             if self.prev_led_state != self.led_state:
                 # LED state has changed.
-                if self.prev_led_state == 3:
+                if self.prev_led_state == 2:
                     self.animations.stop_flashing = True
                 self.prev_led_state = self.led_state
                 if self.led_state == 0:
@@ -46,6 +46,7 @@ class LEDController:
 
 if __name__ == '__main__':
     try:
+        rospy.loginfo("led_controller ready")
         ledcontroller = LEDController()
         ledcontroller.run()
     except rospy.ROSInterruptException:

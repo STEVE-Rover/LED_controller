@@ -7,7 +7,7 @@ import neopixel_spi as neopixel
 
 class Animations:
     def __init__(self):
-        num_pixels = 30
+        num_pixels = 60
         pixel_order = neopixel.GRB
         spi = board.SPI()
         self.pixels = neopixel.NeoPixel_SPI(spi, num_pixels, pixel_order=pixel_order, 
