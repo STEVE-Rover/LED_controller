@@ -7,7 +7,7 @@ import time
 import board
 import neopixel_spi as neopixel
 
-NUM_PIXELS = 30
+NUM_PIXELS = 60
 PIXEL_ORDER = neopixel.GRB
 COLORS = (0xFF0000, 0x00FF00, 0x0000FF)
 DELAY = 0.1

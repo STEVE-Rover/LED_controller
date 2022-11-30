@@ -49,3 +49,5 @@ This node controls a WS2812B LED strip depending on the state of the robot in ac
 
 ### Wiring
 Wire the NeoPixel's `DIN` pin to the Nano's `SPI_1_MOSI` pin (19) and the ground wire in a GND pin (20)
+
+TODO: document the full wiring including the level-shifter setup
